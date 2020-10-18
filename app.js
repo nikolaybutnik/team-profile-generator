@@ -103,6 +103,9 @@ const internQuestions = [
   },
 ];
 
+//Define a boolean that will prevent the user from adding more than one manager.
+let managerExists = false;
+
 // Define a function that initializes the data collection.
 // Change which questions are asked based on the employee's role.
 // Callback1 will take resulting array of employee objects and pass it into render function. The resulting html template will be saved to a variable.
@@ -115,28 +118,38 @@ let init = (cb1, cb2) => {
         message: "What is the employee's role?",
         name: "employeeRole",
         choices: ["Manager", "Engineer", "Intern"],
-        // Validate that only one manager exists per team.
       },
     ])
     .then((response) => {
       switch (response.employeeRole) {
         case "Manager":
-          inquirer.prompt(managerQuestions).then((response) => {
-            const manager = new Manager(
-              response.managerName,
-              response.managerId,
-              response.managerEmail,
-              response.managerOffice
-            );
-            employees.push(manager);
-            if (response.repeatInquirer) {
-              init(cb1, cb2);
-            } else {
-              console.log(employees);
-              let result = cb1(employees);
-              cb2(result);
-            }
-          });
+          // If a manager does not yet exist, proceed with the code block.
+          if (managerExists === false) {
+            inquirer.prompt(managerQuestions).then((response) => {
+              const manager = new Manager(
+                response.managerName,
+                response.managerId,
+                response.managerEmail,
+                response.managerOffice
+              );
+              employees.push(manager);
+              // After one manager has been added, change the boolean value.
+              // Creation of another manager will be prevented by the if statement this code block is in.
+              managerExists = true;
+              if (response.repeatInquirer) {
+                init(cb1, cb2);
+              } else {
+                console.log(employees);
+                let result = cb1(employees);
+                cb2(result);
+              }
+            });
+          }
+          // If a manager already exists, notify the user and reset the question.
+          else {
+            console.log("Too many managers!");
+            init(cb1, cb2);
+          }
           break;
         case "Engineer":
           inquirer.prompt(engineerQuestions).then((response) => {
