@@ -128,10 +128,11 @@ let init = (cb1, cb2) => {
             );
             employees.push(manager);
             if (response.repeatInquirer) {
-              init(cb1);
+              init(cb1, cb2);
             } else {
               console.log(employees);
               let result = cb1(employees);
+              cb2(result);
             }
           });
           break;
@@ -145,10 +146,11 @@ let init = (cb1, cb2) => {
             );
             employees.push(engineer);
             if (response.repeatInquirer) {
-              init(cb1);
+              init(cb1, cb2);
             } else {
               console.log(employees);
               let result = cb1(employees);
+              cb2(result);
             }
           });
           break;
@@ -162,10 +164,11 @@ let init = (cb1, cb2) => {
             );
             employees.push(intern);
             if (response.repeatInquirer) {
-              init(cb1);
+              init(cb1, cb2);
             } else {
               console.log(employees);
               let result = cb1(employees);
+              cb2(result);
             }
           });
           break;
@@ -174,11 +177,20 @@ let init = (cb1, cb2) => {
 };
 
 // Initialize the data collection process.
-init(render);
+init(render, write);
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
+
+function write(result) {
+  fs.writeFile(outputPath, result, function (err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("Employees successfully written to HTML.");
+  });
+}
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
