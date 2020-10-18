@@ -105,6 +105,8 @@ const internQuestions = [
 
 // Define a function that initializes the data collection.
 // Change which questions are asked based on the employee's role.
+// Callback1 will take resulting array of employee objects and pass it into render function. The resulting html template will be saved to a variable.
+// Callback2 will take the resulting html template and save it to html file to be displayed on screen.
 let init = (cb1, cb2) => {
   inquirer
     .prompt([
@@ -176,13 +178,10 @@ let init = (cb1, cb2) => {
     });
 };
 
-// Initialize the data collection process.
+// Initialize the data collection process. Pass in the render and write functions.
 init(render, write);
 
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
+// Define a function that will write the resulting html after being passed into render function, and write it to html file. Pass the function into init.
 function write(result) {
   fs.writeFile(outputPath, result, function (err) {
     if (err) {
