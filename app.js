@@ -66,9 +66,10 @@ const managerQuestions = [
     name: "managerEmail",
   },
   {
-    type: "input",
+    type: "number",
     message: "What is the manager's office phone number?",
     name: "managerOffice",
+    ...validateNumbers(),
   },
   {
     type: "confirm",
