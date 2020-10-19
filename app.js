@@ -13,17 +13,52 @@ const render = require("./lib/htmlRenderer");
 // Define an array that holds all employee objects.
 let employees = [];
 
+// Define a function that will write the resulting html after being passed into render function, and write it to html file. Pass the function into init.
+const write = (result) => {
+  fs.writeFile(outputPath, result, function (err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("Employees successfully written to HTML.");
+  });
+};
+
+// Define a function to validate that ID input is a number.
+let validateNumbers = (moreValidationChecks) => ({
+  validate: (input) => {
+    if (input === "") {
+      return "ID needs to be a number.";
+    }
+    return moreValidationChecks ? moreValidationChecks(input) : true;
+  },
+  filter: (input) => {
+    // clear the invalid input
+    return Number.isNaN(input) || Number(input) < 0 ? "" : Number(input);
+  },
+});
+
+// Define a function to validate name is not an empty string.
+const validateName = (input) => {
+  if (input === "") {
+    return "Name is required.";
+  } else {
+    return true;
+  }
+};
+
 // Define a list of questions to ask if the employee is a manager.
 const managerQuestions = [
   {
     type: "input",
     message: "What is the manager's name?",
     name: "managerName",
+    validate: validateName,
   },
   {
-    type: "input",
+    type: "number",
     message: "What is the manager's ID number?",
     name: "managerId",
+    ...validateNumbers(),
   },
   {
     type: "input",
@@ -49,11 +84,13 @@ const engineerQuestions = [
     type: "input",
     message: "What is the engineer's name?",
     name: "engineerName",
+    validate: validateName,
   },
   {
-    type: "input",
+    type: "number",
     message: "What is the engineer's ID number?",
     name: "engineerId",
+    ...validateNumbers(),
   },
   {
     type: "input",
@@ -79,11 +116,13 @@ const internQuestions = [
     type: "input",
     message: "What is the intern's name?",
     name: "internName",
+    validate: validateName,
   },
   {
-    type: "input",
+    type: "number",
     message: "What is the intern's ID number?",
     name: "internId",
+    ...validateNumbers(),
   },
   {
     type: "input",
@@ -195,13 +234,3 @@ let init = (cb1, cb2) => {
 
 // Initialize the data collection process. Pass in the render and write functions.
 init(render, write);
-
-// Define a function that will write the resulting html after being passed into render function, and write it to html file. Pass the function into init.
-function write(result) {
-  fs.writeFile(outputPath, result, function (err) {
-    if (err) {
-      return console.log(err);
-    }
-    console.log("Employees successfully written to HTML.");
-  });
-}
