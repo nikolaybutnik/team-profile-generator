@@ -37,6 +37,20 @@ let validateNumbers = (moreValidationChecks) => ({
   },
 });
 
+// Define a function to validate that manager's office number input is a number.
+let validatePhone = (moreValidationChecks) => ({
+  validate: (input) => {
+    if (input === "") {
+      return "Office phone should only include numbers. Do not use any special characters.";
+    }
+    return moreValidationChecks ? moreValidationChecks(input) : true;
+  },
+  filter: (input) => {
+    // clear the invalid input
+    return Number.isNaN(input) || Number(input) < 0 ? "" : Number(input);
+  },
+});
+
 // Define a function to validate name is not an empty string.
 const validateName = (input) => {
   if (input === "") {
@@ -69,7 +83,7 @@ const managerQuestions = [
     type: "number",
     message: "What is the manager's office phone number?",
     name: "managerOffice",
-    ...validateNumbers(),
+    ...validatePhone(),
   },
   {
     type: "confirm",
