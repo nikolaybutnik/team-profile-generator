@@ -6,6 +6,8 @@
 
 A simple command line application for efficiently generating an HTML file populated with employees that make up a team. A team consists of one manager and any number of engineers and interns.
 
+[A demo of the application can be viewed here](https://drive.google.com/file/d/1WKv9dk0Dl6rhyG1Qo7kFCCBETxgpSR4L/view)
+
 ![Team Profile Generator Image](https://github.com/nikolaybutnik/team-profile-generator/blob/main/team-profile-generator-screenshot.png?raw=true)
 
 ## Table of Contents
