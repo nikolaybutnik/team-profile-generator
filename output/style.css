@@ -1,0 +1,30 @@
+body {
+  background: aliceblue;
+}
+
+h1 {
+  color: white;
+}
+
+h2 {
+  color: white;
+}
+
+h3 {
+  color: white;
+}
+
+.team-heading {
+  background: rgb(136, 184, 255);
+}
+
+.card-header {
+  background: rgb(136, 184, 255);
+}
+
+.card {
+  margin-right: 25px;
+  margin-left: 25px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
