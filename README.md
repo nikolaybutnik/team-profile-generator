@@ -35,7 +35,7 @@ Feel free to submit any pull requests. All pull requests will be considered.
 
 ## Tests
 
-Navigate to `/lib` folder and run `npm test` from CLI. Ensure to run `npm install` before using the application to make sure Jest and all other dependencies are installed. The tests will be ran on the employee classes used in creation of team members.
+Run `npm test` from CLI. Ensure to run `npm install` before using the application to make sure Jest and all other dependencies are installed. The tests will be ran on the employee object classes used in creation of team members.
 
 ## Questions
 
